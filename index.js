@@ -176,11 +176,10 @@ function compression (options) {
       // compression method
       var accept = accepts(req)
       var method = accept.encoding(['gzip', 'deflate', 'identity'])
+      var methods = accept.encodings()
 
-      // we really don't prefer deflate
-      if (method === 'deflate' && accept.encoding(['gzip'])) {
-        method = accept.encoding(['gzip', 'identity'])
-      }
+      if(methods.indexOf(opts.preferredMethod) != -1)
+        method = opts.preferredMethod
 
       // negotiation failed
       if (!method || method === 'identity') {
